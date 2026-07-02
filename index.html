@@ -610,28 +610,36 @@ gsap.registerPlugin(ScrollTrigger);
   const track = document.querySelector('.js-track');
   const dotsWrap = document.querySelector('.js-dots');
 
-  const items = [
-    { label: '扎蛴蟆灯', color1: '#c43a31', color2: '#e8753a', icon: '🏮', desc: '竹篾扎骨架，糊以白纸，描画蛴蟆模样，内置烛火。家家户户节前精心制作，寄托驱邪纳福的美好愿望。' },
-    { label: '万人巡游', color1: '#d4a853', color2: '#c43a31', icon: '🔥', desc: '夜幕降临，男女老少手举蛴蟆灯，汇成蜿蜒数里的火龙，齐唱民谣，场面震撼人心。' },
-    { label: '送灯祈福', color1: '#8b1a2b', color2: '#e8753a', icon: '✨', desc: '队伍将蛴蟆灯送至河边田头点燃焚烧，灯火化为漫天星光，寓意送走灾祸，迎来丰收。' },
-    { label: '灯火长龙', color1: '#1a0b08', color2: '#c43a31', icon: '🐉', desc: '三百年传承不息，每年农历正月十四，万盏灯火照亮南充夜空，如长龙蜿蜒山间。' },
-    { label: '非遗传承', color1: '#5a1a1a', color2: '#d4a853', icon: '👴', desc: '四川省第六批非物质文化遗产代表性项目，从明末清初延续至今，代代相传、生生不息。' },
-    { label: '祈福平安', color1: '#c43a31', color2: '#fef3e0', icon: '🙏', desc: '"十四夜，送蛴蟆，蛴蟆公，蛴蟆婆，把你蛴蟆送下河……"古老歌谣里装着对美好生活的永恒期盼。' },
+  // Photo filenames (in images/ folder)
+  const photos = [
+    'e1b1fbe077ca0958c4c8d8dbc67deab1.jpg',
+    '642332684d3777524745d9680cb8556e.jpg',
+    '2e3b30508daab4dba6f028afe7654f59.jpg',
+    'aa0b5b0af61641fd329860dcabc44de7.jpg',
+    '339f109f1fbf4a14b010a0ecca2996b7.jpg',
+    'f218281e74516dd0d4d7bf481dde7905.jpg',
   ];
 
-  // Build cards
+  const items = [
+    { label: '扎蛴蟆灯', desc: '竹篾扎骨架，糊以白纸，描画蛴蟆模样，内置烛火。家家户户节前精心制作，寄托驱邪纳福的美好愿望。' },
+    { label: '万人巡游', desc: '夜幕降临，男女老少手举蛴蟆灯，汇成蜿蜒数里的火龙，齐唱民谣，场面震撼人心。' },
+    { label: '送灯祈福', desc: '队伍将蛴蟆灯送至河边田头点燃焚烧，灯火化为漫天星光，寓意送走灾祸，迎来丰收。' },
+    { label: '灯火长龙', desc: '三百年传承不息，每年农历正月十四，万盏灯火照亮南充夜空，如长龙蜿蜒山间。' },
+    { label: '非遗传承', desc: '四川省第六批非物质文化遗产代表性项目，从明末清初延续至今，代代相传、生生不息。' },
+    { label: '祈福平安', desc: '"十四夜，送蛴蟆，蛴蟆公，蛴蟆婆，把你蛴蟆送下河……"古老歌谣里装着对美好生活的永恒期盼。' },
+  ];
+
+  // Build cards with real photos
   items.forEach((item, i) => {
+    const photoUrl = 'images/' + photos[i];
     const card = document.createElement('div');
     card.className = 's-gallery__card';
     card.innerHTML = `
       <div class="s-gallery__card-inner">
-        <div class="s-gallery__card-placeholder" style="background:linear-gradient(160deg,${item.color1},${item.color2});">
-          <span class="s-gallery__card-icon">${item.icon}</span>
-          <span class="s-gallery__card-title">${item.label}</span>
-          <span class="s-gallery__card-desc">${item.desc}</span>
-        </div>
+        <img src="${photoUrl}" alt="${item.label}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+        <div class="s-gallery__card-label" style="position:absolute;bottom:0;left:0;right:0;padding:2rem 1.5rem 1.5rem;background:linear-gradient(transparent,rgba(26,11,8,0.85));color:#fef3e0;font:700 1.25rem var(--f-display);text-align:center;">${item.label}</div>
       </div>
-      <p class="s-gallery__card-label">${item.label}</p>
+      <p class="s-gallery__card-label">${item.label} — ${item.desc}</p>
     `;
     track.appendChild(card);
     // Dot

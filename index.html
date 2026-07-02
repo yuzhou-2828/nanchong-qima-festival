@@ -192,79 +192,86 @@ img { display: block; max-width: 100%; }
 }
 
 /* ============================================================
-   3D CYLINDRICAL SCROLL GALLERY — the key new section
+   HORIZONTAL SCROLL-TRACK GALLERY
+   Cards slide horizontally as user scrolls
    ============================================================ */
 .s-gallery {
   position: relative;
-  height: 600vh; /* very tall to allow long scroll scrub */
+  height: 500vh;
   background: var(--c-primary);
+  border-bottom: 1px solid var(--c-secondary);
 }
 .s-gallery__sticky {
   position: sticky; top: 0; left: 0;
   width: 100%; height: 100vh;
   overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
 }
-/* The 3D scene */
-.s-gallery__scene {
-  position: absolute; inset: 0;
-  perspective: 50rem;
-  perspective-origin: 50% 50%;
-  display: flex; align-items: center; justify-content: center;
-}
-/* Each card is placed on the cylinder surface */
-.s-gallery__card {
-  position: absolute;
-  width: min(55vw, 40rem);
-  height: min(70vh, 30rem);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  border: 1px solid rgba(26,11,8,0.15);
-  box-shadow: 0 0 40px rgba(26,11,8,0.08);
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+/* The sliding track — moves horizontally */
+.s-gallery__track {
+  display: flex;
+  height: 100%;
   will-change: transform;
-  transition: filter 0.3s;
 }
-.s-gallery__card img {
-  width: 100%; height: 100%; object-fit: cover;
+/* Each card */
+.s-gallery__card {
+  flex: 0 0 auto;
+  width: min(65vw, 42rem);
+  height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 2rem;
+}
+.s-gallery__card-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  max-height: 65vh;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(26,11,8,0.12);
+  box-shadow: 0 8px 40px rgba(26,11,8,0.1);
+  display: flex; align-items: center; justify-content: center;
 }
 .s-gallery__card-placeholder {
   width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  font: 900 3rem var(--f-display); color: rgba(255,255,255,0.8);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; text-align: center; padding: 2rem;
 }
+.s-gallery__card-icon { font-size: 5rem; display: block; }
+.s-gallery__card-title { font: 900 2rem var(--f-display); color: rgba(255,255,255,0.9); }
+.s-gallery__card-desc { font: 400 0.85rem var(--f-body); color: rgba(255,255,255,0.7); }
 .s-gallery__card-label {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 2rem 1.5rem 1.5rem;
-  background: linear-gradient(transparent, rgba(26,11,8,0.85));
-  color: var(--c-primary);
-  font: 700 1.25rem var(--f-display);
+  margin-top: 1.5rem;
+  font: 700 1.1rem var(--f-display);
+  color: var(--c-secondary);
   text-align: center;
 }
-/* Center indicator — the "selected" frame */
-.s-gallery__frame {
-  position: absolute; inset: 0; pointer-events: none; z-index: 10;
-  display: flex; align-items: center; justify-content: center;
+/* Section header inside gallery */
+.s-gallery__header {
+  flex: 0 0 auto;
+  width: min(65vw, 42rem);
+  height: 100%;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  padding: 0 4rem;
 }
-.s-gallery__frame-inner {
-  width: min(55vw, 40rem);
-  height: min(70vh, 30rem);
-  border-radius: 0.5rem;
-  border: 2px solid var(--c-accent);
-  box-shadow: 0 0 60px rgba(196,58,49,0.15), inset 0 0 0 9999px transparent;
-  opacity: 0.6;
+.s-gallery__header-label {
+  font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--c-accent); margin-bottom: 1.5rem;
 }
-/* Caption below the frame */
-.s-gallery__caption-wrap {
-  position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%);
-  z-index: 11; pointer-events: none;
-  text-align: center;
+.s-gallery__header-title {
+  font: 900 clamp(2.5rem, 4vw, 4.5rem) var(--f-display);
+  line-height: 1.1; color: var(--c-secondary);
 }
-.s-gallery__caption {
-  font: 400 14px var(--f-mono); text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--c-secondary); opacity: 0.7;
+/* Progress dots */
+.s-gallery__dots {
+  position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+  z-index: 5; display: flex; gap: 0.75rem;
 }
+.s-gallery__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--c-secondary); opacity: 0.2;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.s-gallery__dot.is-active { opacity: 0.8; transform: scale(1.5); }
 
 /* ======== CTA ======== */
 .s-cta {
@@ -400,23 +407,20 @@ img { display: block; max-width: 100%; }
     </div>
   </section>
 
-  <!-- ============================================
-       3D CYLINDRICAL SCROLL GALLERY
-       ============================================ -->
+  <!-- GALLERY: Horizontal scroll-track -->
   <section class="s-gallery js-gallery" id="gallery">
     <div class="s-gallery__sticky">
-      <!-- 3D scene -->
-      <div class="s-gallery__scene js-scene">
+      <div class="s-gallery__track js-track">
+        <!-- Header card -->
+        <div class="s-gallery__card">
+          <div class="s-gallery__header">
+            <p class="s-gallery__header-label">/ 影像记录</p>
+            <h2 class="s-gallery__header-title">灯火里的<br>蛴蟆节</h2>
+          </div>
+        </div>
         <!-- Cards injected by JS -->
       </div>
-      <!-- Center frame indicator -->
-      <div class="s-gallery__frame">
-        <div class="s-gallery__frame-inner"></div>
-      </div>
-      <!-- Caption -->
-      <div class="s-gallery__caption-wrap">
-        <p class="s-gallery__caption js-caption">扎蛴蟆灯</p>
-      </div>
+      <div class="s-gallery__dots js-dots"></div>
     </div>
   </section>
 
@@ -600,95 +604,89 @@ gsap.registerPlugin(ScrollTrigger);
   window.addEventListener('resize', resize);
 })();
 
-// ==================== 3D CYLINDRICAL GALLERY ====================
+// ==================== HORIZONTAL SCROLL-TRACK GALLERY ====================
 (function() {
   const gallery = document.querySelector('.js-gallery');
-  const scene = document.querySelector('.js-scene');
-  const captionEl = document.querySelector('.js-caption');
+  const track = document.querySelector('.js-track');
+  const dotsWrap = document.querySelector('.js-dots');
 
-  // ---- Gallery data ----
   const items = [
-    { label: '扎蛴蟆灯', color1: '#c43a31', color2: '#e8753a', icon: '🏮', desc: '竹篾扎骨·白纸糊面·精心描画' },
-    { label: '万人巡游', color1: '#d4a853', color2: '#e8753a', icon: '🔥', desc: '举灯成河·蜿蜒数里·歌谣震天' },
-    { label: '送灯祈福', color1: '#8b1a2b', color2: '#c43a31', icon: '✨', desc: '送至河畔·点燃焚烧·驱邪纳福' },
-    { label: '灯火长龙', color1: '#1a0b08', color2: '#c43a31', icon: '🐉', desc: '夜色之中·万盏灯火·宛如火龙' },
-    { label: '非遗传承', color1: '#5a1a1a', color2: '#d4a853', icon: '👴', desc: '三百年历史·代代相传·生生不息' },
-    { label: '祈福平安', color1: '#c43a31', color2: '#fef3e0', icon: '🙏', desc: '十四夜·送蛴蟆·无病无灾·五谷丰登' },
+    { label: '扎蛴蟆灯', color1: '#c43a31', color2: '#e8753a', icon: '🏮', desc: '竹篾扎骨架，糊以白纸，描画蛴蟆模样，内置烛火。家家户户节前精心制作，寄托驱邪纳福的美好愿望。' },
+    { label: '万人巡游', color1: '#d4a853', color2: '#c43a31', icon: '🔥', desc: '夜幕降临，男女老少手举蛴蟆灯，汇成蜿蜒数里的火龙，齐唱民谣，场面震撼人心。' },
+    { label: '送灯祈福', color1: '#8b1a2b', color2: '#e8753a', icon: '✨', desc: '队伍将蛴蟆灯送至河边田头点燃焚烧，灯火化为漫天星光，寓意送走灾祸，迎来丰收。' },
+    { label: '灯火长龙', color1: '#1a0b08', color2: '#c43a31', icon: '🐉', desc: '三百年传承不息，每年农历正月十四，万盏灯火照亮南充夜空，如长龙蜿蜒山间。' },
+    { label: '非遗传承', color1: '#5a1a1a', color2: '#d4a853', icon: '👴', desc: '四川省第六批非物质文化遗产代表性项目，从明末清初延续至今，代代相传、生生不息。' },
+    { label: '祈福平安', color1: '#c43a31', color2: '#fef3e0', icon: '🙏', desc: '"十四夜，送蛴蟆，蛴蟆公，蛴蟆婆，把你蛴蟆送下河……"古老歌谣里装着对美好生活的永恒期盼。' },
   ];
 
-  const CARD_COUNT = items.length;
-  const RADIUS = 35; // cylinder radius in rem (approx)
-  let progress = 0; // 0..1 driven by scroll
-
-  // ---- Build cards ----
+  // Build cards
   items.forEach((item, i) => {
     const card = document.createElement('div');
     card.className = 's-gallery__card';
     card.innerHTML = `
-      <div class="s-gallery__card-placeholder" style="
-        background: linear-gradient(135deg, ${item.color1}, ${item.color2});
-        flex-direction: column; gap: 1rem;
-        text-align: center; padding: 2rem;
-      ">
-        <span style="font-size:4rem;display:block;">${item.icon}</span>
-        <span style="font-size:1.5rem;font-weight:900;">${item.label}</span>
-        <span style="font-size:0.8rem;opacity:0.7;font-family:var(--f-mono);">${item.desc}</span>
+      <div class="s-gallery__card-inner">
+        <div class="s-gallery__card-placeholder" style="background:linear-gradient(160deg,${item.color1},${item.color2});">
+          <span class="s-gallery__card-icon">${item.icon}</span>
+          <span class="s-gallery__card-title">${item.label}</span>
+          <span class="s-gallery__card-desc">${item.desc}</span>
+        </div>
       </div>
-      <div class="s-gallery__card-label">${item.label}</div>
+      <p class="s-gallery__card-label">${item.label}</p>
     `;
-    scene.appendChild(card);
+    track.appendChild(card);
+    // Dot
+    const dot = document.createElement('div');
+    dot.className = 's-gallery__dot';
+    dotsWrap.appendChild(dot);
   });
 
-  const cards = document.querySelectorAll('.s-gallery__card');
+  const cards = track.querySelectorAll('.s-gallery__card');
+  const dots = dotsWrap.querySelectorAll('.s-gallery__dot');
+  const totalCards = cards.length; // 1 header + N data cards
 
-  // ---- Position cards on cylinder ----
-  function positionCards(p) {
-    // p: 0..1, scroll progress. Each card takes a segment of the cylinder.
-    // We rotate the whole set based on scroll
-    const anglePerCard = (Math.PI * 2) / CARD_COUNT;
-    const baseRotation = p * Math.PI * 2; // full rotation over full scroll
-
-    cards.forEach((card, i) => {
-      const angle = baseRotation + i * anglePerCard;
-      const rotY = angle * (180 / Math.PI); // convert to degrees
-      // Card furthest from 0 degrees gets pushed back in Z and faded
-      const frontness = Math.cos(angle); // 1 = front, -1 = back
-      const z = frontness * RADIUS * 0.5;
-
-      card.style.transform = `
-        rotateY(${rotY}deg)
-        translateZ(${RADIUS}rem)
-        translateX(${-50}%)
-        translateY(${-50}%)
-      `;
-
-      // Fade cards that are on the sides/back
-      const opacity = 0.3 + (frontness + 1) / 2 * 0.7;
-      const scale = 0.75 + (frontness + 1) / 2 * 0.25;
-      card.style.opacity = String(Math.max(0.2, opacity));
-      card.style.filter = `brightness(${0.4 + (frontness + 1) / 2 * 0.6})`;
-
-      // Update caption when a card is centered
-      if (Math.abs(frontness - 1) < 0.05 && captionEl) {
-        captionEl.textContent = items[i].label + ' — ' + items[i].desc;
-      }
-    });
+  // Calculate scroll distance: need to slide all cards past the viewport
+  // Each card is min(65vw, 42rem) wide. We slide track so all cards scroll through.
+  function getCardWidth() {
+    const firstCard = cards[0];
+    if (!firstCard) return window.innerWidth * 0.65;
+    return firstCard.getBoundingClientRect().width + 32; // + gap
   }
 
-  // ---- GSAP ScrollTrigger scrub ----
+  let cardWidth = getCardWidth();
+
+  // Total scroll distance = total width of track minus viewport
+  function getScrollDistance() {
+    return cardWidth * totalCards;
+  }
+
+  // The track starts with header visible, scrolls left to reveal all cards
   ScrollTrigger.create({
     trigger: gallery,
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 0.5,
+    scrub: 1,
+    onRefresh() {
+      cardWidth = getCardWidth();
+    },
     onUpdate(self) {
-      progress = self.progress;
-      positionCards(progress);
+      const dist = getScrollDistance();
+      const x = -self.progress * dist;
+      track.style.transform = `translate3d(${x}px,0,0)`;
+
+      // Update active dot
+      if (totalCards > 0) {
+        const activeIdx = Math.round(self.progress * (totalCards - 1));
+        dots.forEach((d, i) => {
+          d.classList.toggle('is-active', i === activeIdx);
+        });
+      }
     },
   });
 
-  // Initial position
-  positionCards(0);
+  window.addEventListener('resize', () => {
+    cardWidth = getCardWidth();
+    ScrollTrigger.refresh();
+  });
 })();
 
 // ==================== SCROLL REVEALS ====================

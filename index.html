@@ -5,7 +5,6 @@
 <title>南充蛴蟆节 — 三百年非遗传承</title>
 <meta name="description" content="南充蛴蟆节，四川省非物质文化遗产，每年农历正月十四，万人举灯送蛴蟆，祈福平安。西南石油大学南充校区三下乡队伍倾情呈现。">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
 <meta property="og:title" content="南充蛴蟆节 — 三百年非遗传承">
 <meta property="og:description" content="扎蛴蟆灯，举灯巡游，唱民谣送灯祈福。四川省第六批非遗代表性项目。">
 <meta property="og:type" content="website">
@@ -13,112 +12,132 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+/* ========== FONTS ========== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;400;700;900&family=Noto+Sans+SC:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
+/* ========== VARIABLES ========== */
 :root {
-  --c-primary: #fef3e0;
-  --c-secondary: #1a0b08;
-  --c-shadow: #c8bda9;
-  --c-white: #fff8ea;
-  --c-accent: #c43a31;
-  --c-gold: #d4a853;
-  --c-lantern: #e8753a;
+  --c-p: #fef3e0;  /* primary / background */
+  --c-s: #1a0b08;  /* secondary / text & borders */
+  --c-h: #c8bda9;  /* shadow */
+  --c-w: #fff8ea;  /* white */
+  --c-a: #c43a31;  /* accent red */
+  --c-g: #d4a853;  /* gold */
+  --c-l: #e8753a;  /* lantern orange */
+
   --f-display: "Noto Serif SC", "Songti SC", serif;
-  --f-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --f-mono: "JetBrains Mono", "Consolas", monospace;
+  --f-body: "Noto Serif SC", "Songti SC", serif;
+  --f-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
 }
 
+/* ========== RESET ========== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html {
-  font: 400 16px/1.6 var(--f-body);
-  background: var(--c-secondary);
+  font: 400 16px/1.48 var(--f-body);
+  letter-spacing: -0.025em;
+  background: var(--c-s);
   scrollbar-width: none;
-  color: var(--c-secondary);
+  color: var(--c-s);
   overflow-x: hidden;
 }
 html::-webkit-scrollbar { display: none; }
-body { background: var(--c-primary); min-height: 100vh; -webkit-font-smoothing: antialiased; }
-::selection { background: var(--c-secondary); color: var(--c-primary); }
+body { background: var(--c-p); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--c-s); color: var(--c-p); }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 
-/* ======== INTRO OVERLAY ======== */
+/* ========== INTRO OVERLAY ========== */
 .site-intro {
   position: fixed; inset: 0; z-index: 9999;
-  background: var(--c-secondary);
+  background: var(--c-s);
   display: flex; align-items: center; justify-content: center;
 }
-.site-intro svg { width: clamp(80px, 15vw, 160px); }
+.site-intro__frame {
+  position: absolute; inset: 0; z-index: 1;
+  border: 1rem solid var(--c-s);
+  opacity: 0; will-change: border-width; pointer-events: none;
+}
+.site-intro__logo {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+}
+.site-intro__logo svg { width: clamp(80px, 15vw, 160px); }
 
-/* ======== WRAPPER ======== */
+/* ========== WRAPPER ========== */
 .site-wrapper { position: relative; width: 100%; }
 
-/* ======== HEADER ======== */
+/* ========== HEADER ========== */
 .site-head {
   position: fixed; top: 0; left: 0; z-index: 100; width: 100%;
-  border-bottom: 1px solid var(--c-secondary);
-  background: var(--c-primary); opacity: 0;
+  border-bottom: 1px solid var(--c-s);
+  background: var(--c-p); opacity: 0;
 }
 .site-head__inner {
-  display: flex; align-items: stretch; width: 100%; height: 5rem;
+  display: flex; align-items: stretch; width: 100%; height: 6rem;
 }
 .site-head__logo {
   display: flex; align-items: center; justify-content: center;
-  padding: 0.8rem; width: 5rem; flex-shrink: 0;
-  border-right: 1px solid var(--c-secondary);
+  padding: 1.5rem; width: 6rem; height: 6rem; flex-shrink: 0;
+  border-right: 1px solid var(--c-s);
 }
 .site-head__logo svg { width: 3rem; height: 3rem; }
 .site-head__console {
-  display: flex; align-items: center; padding: 0 1.5rem; margin-right: auto;
-  font: 400 10px/1.4 var(--f-mono); text-transform: uppercase; opacity: 0.6;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  padding: 1.5rem; margin-right: auto;
+  font: 400 8px/1.4 var(--f-mono); text-transform: uppercase; white-space: pre-line;
+  opacity: 0.7;
 }
 .site-head__console .caret { animation: blink 1s step-end infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-.site-head__nav { display: flex; }
+.site-head__nav { display: flex; align-items: stretch; }
 .site-head__nav a {
   display: flex; align-items: center; padding: 0 1.25rem;
   font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.05em;
-  border-left: 1px solid var(--c-secondary);
+  border-left: 1px solid var(--c-s);
   transition: 0.3s;
 }
-.site-head__nav a:hover { background: var(--c-secondary); color: var(--c-primary); }
+.site-head__nav a:hover { background: var(--c-s); color: var(--c-p); }
 
 @media (max-width: 768px) {
-  .site-head__inner { height: 3.5rem; }
-  .site-head__logo { width: 3.5rem; height: 3.5rem; padding: 0.6rem; }
+  .site-head__inner { height: 4rem; }
+  .site-head__logo { width: 4rem; height: 4rem; padding: 1rem; }
   .site-head__logo svg { width: 2rem; height: 2rem; }
   .site-head__console { display: none; }
-  .site-head__nav a { padding: 0 0.6rem; font-size: 10px; }
+  .site-head__nav a { padding: 0 0.75rem; font-size: 10px; }
 }
 
-/* ======== HERO ======== */
+/* ========== HERO ========== */
 .s-hero {
   position: relative; display: flex; align-items: center; justify-content: center;
-  min-height: 100vh; border-bottom: 1px solid var(--c-secondary); overflow: hidden;
+  min-height: 100vh; border-bottom: 1px solid var(--c-s); overflow: hidden;
 }
 .s-hero__canvas { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.s-hero__border {
+  position: absolute; bottom: 0; left: 0; z-index: 3; width: 100%; height: 1px;
+  background: var(--c-s);
+}
 .s-hero__content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
 .s-hero__super {
   font: 400 12px var(--f-mono); text-transform: uppercase; letter-spacing: 0.2em;
-  color: var(--c-accent); margin-bottom: 1.5rem;
+  color: var(--c-a); margin-bottom: 2rem;
 }
 .s-hero__title {
-  font: 900 clamp(3rem, 8vw, 9rem) var(--f-display);
-  line-height: 0.9; color: var(--c-secondary);
+  font: 900 clamp(4rem, 11vw, 10rem) var(--f-display);
+  line-height: 0.85; color: var(--c-s);
+  text-transform: uppercase;
 }
 .s-hero__title span { display: inline-block; }
 .s-hero__sub {
-  font: 400 clamp(1rem, 2.5vw, 1.5rem) var(--f-body);
-  opacity: 0.6; margin-top: 2rem;
+  font: 200 clamp(1rem, 2.5vw, 1.35rem) var(--f-body);
+  opacity: 0.55; margin-top: 2rem;
 }
 .s-hero__scroll {
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
   z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
 }
-.s-hero__scroll span { font: 400 10px var(--f-mono); text-transform: uppercase; letter-spacing: 0.15em; }
+.s-hero__scroll span { font: 400 8px var(--f-mono); text-transform: uppercase; letter-spacing: 0.2em; }
 .s-hero__scroll-line {
-  width: 1px; height: 3rem; background: var(--c-secondary);
+  width: 1px; height: 3rem; background: var(--c-s);
   animation: scroll-line 2s ease-in-out infinite;
 }
 @keyframes scroll-line {
@@ -128,193 +147,252 @@ img { display: block; max-width: 100%; }
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
-/* ======== ABOUT ======== */
-.s-about { border-bottom: 1px solid var(--c-secondary); }
+/* ========== ABOUT ========== */
+.s-about { position: relative; border-bottom: 1px solid var(--c-s); }
 .s-about__grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
 .s-about__col {
   padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center;
+  position: relative;
 }
-.s-about__col:first-child { border-right: 1px solid var(--c-secondary); }
+.s-about__col:first-child { border-right: 1px solid var(--c-s); }
 .s-about__label {
   font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.15em;
-  color: var(--c-accent); margin-bottom: 2rem;
+  color: var(--c-a); margin-bottom: 2rem;
 }
-.s-about__title { font: 900 clamp(2rem, 4vw, 4rem) var(--f-display); line-height: 1.1; margin-bottom: 2rem; }
-.s-about__text { font: 400 1.1rem/1.8 var(--f-body); opacity: 0.75; max-width: 36rem; }
-.s-about__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
-.s-about__stat { border-top: 1px solid var(--c-secondary); padding-top: 1rem; }
-.s-about__stat-num { font: 900 2.5rem var(--f-display); color: var(--c-accent); line-height: 1; }
-.s-about__stat-label { font: 400 12px var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.5rem; opacity: 0.6; }
-.s-about__canvas-wrap { position: relative; width: 100%; height: 100%; min-height: 400px; }
+.s-about__title {
+  font: 900 clamp(2rem, 4vw, 4rem) var(--f-display);
+  line-height: 1.05; margin-bottom: 2.5rem;
+}
+.s-about__text {
+  font: 400 clamp(1rem, 1.5vw, 1.25rem)/1.7 var(--f-body);
+  opacity: 0.7; max-width: 32rem;
+}
+.s-about__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 4rem; }
+.s-about__stat {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--c-s);
+}
+.s-about__stat:nth-child(odd) { border-right: 1px solid var(--c-s); padding-right: 1.5rem; }
+.s-about__stat:nth-child(even) { padding-left: 1.5rem; }
+.s-about__stat-num {
+  font: 200 2.5rem var(--f-body); color: var(--c-s); line-height: 1;
+}
+.s-about__stat-label {
+  font: 400 9px var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em;
+  margin-top: 0.5rem; opacity: 0.5;
+}
+.s-about__canvas-wrap { position: relative; width: 100%; height: 100%; min-height: 450px; }
 .s-about__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 @media (max-width: 768px) {
   .s-about__grid { grid-template-columns: 1fr; }
-  .s-about__col:first-child { border-right: none; border-bottom: 1px solid var(--c-secondary); }
+  .s-about__col:first-child { border-right: none; border-bottom: 1px solid var(--c-s); }
   .s-about__col { padding: 3rem 1.5rem; }
   .s-about__canvas-wrap { min-height: 300px; }
 }
 
-/* ======== ACTIVITIES ======== */
-.s-activities { border-bottom: 1px solid var(--c-secondary); }
-.s-activities__header { padding: 5rem 4rem 3rem; border-bottom: 1px solid var(--c-secondary); }
+/* ========== ACTIVITIES ========== */
+.s-activities { border-bottom: 1px solid var(--c-s); }
+.s-activities__header { padding: 5rem 4rem 3rem; border-bottom: 1px solid var(--c-s); }
 .s-activities__label {
   font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.15em;
-  color: var(--c-accent); margin-bottom: 1.5rem;
+  color: var(--c-a); margin-bottom: 1.5rem;
 }
-.s-activities__title { font: 900 clamp(2.5rem, 5vw, 5rem) var(--f-display); line-height: 1; }
+.s-activities__title {
+  font: 900 clamp(2.5rem, 5vw, 5rem) var(--f-display); line-height: 1;
+  text-transform: uppercase;
+}
 .s-activities__items { display: grid; grid-template-columns: repeat(3, 1fr); }
 .s-activity {
-  position: relative; padding: 3rem 2.5rem; min-height: 55vh;
+  position: relative; padding: 3rem 2.5rem; min-height: 60vh;
   display: flex; flex-direction: column; justify-content: flex-end;
-  border-right: 1px solid var(--c-secondary); overflow: hidden;
+  border-right: 1px solid var(--c-s); overflow: hidden;
   transition: background 0.5s, color 0.5s;
 }
 .s-activity:last-child { border-right: none; }
-.s-activity:hover { background: var(--c-secondary); }
-.s-activity:hover .s-activity__num { opacity: 0.3; }
-.s-activity:hover .s-activity__name,
-.s-activity:hover .s-activity__desc,
-.s-activity:hover .s-activity__line { color: var(--c-primary); border-color: var(--c-accent); }
-.s-activity__num {
-  font: 900 8rem var(--f-display); line-height: 0.8; color: var(--c-accent);
-  opacity: 0.12; position: absolute; top: 2rem; right: 2rem; transition: 0.5s;
+.s-activity::before {
+  position: absolute; inset: -1px 0 0 -1px;
+  border: 1px solid var(--c-s); content: ""; pointer-events: none;
+  opacity: 0; transition: opacity 0.5s;
 }
-.s-activity__line { width: 2rem; height: 2px; background: var(--c-secondary); margin-bottom: 1.5rem; transition: 0.3s; }
-.s-activity:hover .s-activity__line { width: 4rem; }
+.s-activity:hover { background: var(--c-s); }
+.s-activity:hover,
+.s-activity:hover .s-activity__num,
+.s-activity:hover .s-activity__name,
+.s-activity:hover .s-activity__desc { color: var(--c-p); }
+.s-activity__num {
+  font: 200 6rem var(--f-body); line-height: 0.8;
+  position: absolute; top: 2.5rem; right: 2.5rem;
+  opacity: 0.18; transition: 0.5s;
+}
+.s-activity:hover .s-activity__num { opacity: 0.3; }
+.s-activity__line { width: 2rem; height: 2px; background: var(--c-s); margin-bottom: 1.5rem; transition: 0.4s; }
+.s-activity:hover .s-activity__line { background: var(--c-a); width: 4rem; }
 .s-activity__name { font: 900 1.75rem var(--f-display); margin-bottom: 0.75rem; }
-.s-activity__desc { font: 400 0.95rem/1.7 var(--f-body); opacity: 0.65; max-width: 24rem; }
+.s-activity__desc { font: 400 0.95rem/1.7 var(--f-body); opacity: 0.6; max-width: 24rem; }
 
 @media (max-width: 768px) {
   .s-activities__items { grid-template-columns: 1fr; }
-  .s-activity { border-right: none; border-bottom: 1px solid var(--c-secondary); min-height: 35vh; padding: 2rem 1.5rem; }
+  .s-activity { border-right: none; border-bottom: 1px solid var(--c-s); min-height: 35vh; padding: 2rem 1.5rem; }
   .s-activities__header { padding: 3rem 1.5rem 2rem; }
 }
 
-/* ============================================================
-   HORIZONTAL SCROLL-TRACK GALLERY
-   Cards slide horizontally as user scrolls
-   ============================================================ */
+/* ========== GALLERY: 3D CYLINDRICAL SCROLL ========== */
 .s-gallery {
-  position: relative;
-  height: 500vh;
-  background: var(--c-primary);
-  border-bottom: 1px solid var(--c-secondary);
+  position: relative; height: 500vh;
+  background: var(--c-p); border-bottom: 1px solid var(--c-s);
 }
 .s-gallery__sticky {
   position: sticky; top: 0; left: 0;
-  width: 100%; height: 100vh;
-  overflow: hidden;
+  width: 100%; height: 100vh; overflow: hidden;
 }
-/* The sliding track — moves horizontally */
-.s-gallery__track {
-  display: flex;
-  height: 100%;
-  will-change: transform;
+.s-gallery__sticky::before {
+  position: absolute; top: 0; left: 0; z-index: 10;
+  width: 100%; height: 1px; background: var(--c-s); content: "";
+}
+/* The 3D scene wrapper */
+.s-gallery__scene {
+  position: absolute; inset: 0;
+  perspective: 60rem;
+  perspective-origin: 50% 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+/* The rotator — this rotates all cards together */
+.s-gallery__rotator {
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  display: flex; align-items: center; justify-content: center;
 }
 /* Each card */
 .s-gallery__card {
-  flex: 0 0 auto;
-  width: min(65vw, 42rem);
-  height: 100%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 0 2rem;
-}
-.s-gallery__card-inner {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4/3;
-  max-height: 65vh;
-  border-radius: 0.75rem;
+  position: absolute;
+  width: min(55vw, 36rem);
+  height: min(70vh, 28rem);
+  border-radius: 0.5rem;
   overflow: hidden;
   border: 1px solid rgba(26,11,8,0.12);
-  box-shadow: 0 8px 40px rgba(26,11,8,0.1);
-  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 30px rgba(26,11,8,0.08);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: filter 0.3s;
 }
-.s-gallery__card-placeholder {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 1rem; text-align: center; padding: 2rem;
+.s-gallery__card img {
+  width: 100%; height: 100%; object-fit: cover;
 }
-.s-gallery__card-icon { font-size: 5rem; display: block; }
-.s-gallery__card-title { font: 900 2rem var(--f-display); color: rgba(255,255,255,0.9); }
-.s-gallery__card-desc { font: 400 0.85rem var(--f-body); color: rgba(255,255,255,0.7); }
-.s-gallery__card-label {
-  margin-top: 1.5rem;
-  font: 700 1.1rem var(--f-display);
-  color: var(--c-secondary);
+.s-gallery__card-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 2rem 1.5rem 1.5rem;
+  background: linear-gradient(transparent, rgba(26,11,8,0.88));
+  color: var(--c-p);
+  font: 700 1.25rem var(--f-display);
   text-align: center;
 }
-/* Section header inside gallery */
-.s-gallery__header {
-  flex: 0 0 auto;
-  width: min(65vw, 42rem);
-  height: 100%;
-  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
-  padding: 0 4rem;
+/* Center highlight frame */
+.s-gallery__frame {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
 }
-.s-gallery__header-label {
+.s-gallery__frame-inner {
+  width: min(55vw, 36rem);
+  height: min(70vh, 28rem);
+  border-radius: 0.5rem;
+  border: 2px solid var(--c-a);
+  box-shadow: 0 0 80px rgba(196,58,49,0.12);
+  opacity: 0.5;
+}
+/* Gallery header — title card */
+.s-gallery__title-card {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.s-gallery__title-card-inner {
+  text-align: center;
+}
+.s-gallery__title-label {
   font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.15em;
-  color: var(--c-accent); margin-bottom: 1.5rem;
+  color: var(--c-a); margin-bottom: 1.5rem;
 }
-.s-gallery__header-title {
-  font: 900 clamp(2.5rem, 4vw, 4.5rem) var(--f-display);
-  line-height: 1.1; color: var(--c-secondary);
+.s-gallery__title-heading {
+  font: 900 clamp(2.5rem, 5vw, 5rem) var(--f-display);
+  line-height: 1; text-transform: uppercase; color: var(--c-s);
 }
-/* Progress dots */
+/* Dots */
 .s-gallery__dots {
   position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
-  z-index: 5; display: flex; gap: 0.75rem;
+  z-index: 10; display: flex; gap: 0.75rem;
 }
 .s-gallery__dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--c-secondary); opacity: 0.2;
-  transition: opacity 0.3s, transform 0.3s;
+  width: 6px; height: 6px; border-radius: 50%;
+  border: 1px solid var(--c-s); opacity: 0.25;
+  transition: all 0.3s;
 }
-.s-gallery__dot.is-active { opacity: 0.8; transform: scale(1.5); }
+.s-gallery__dot.is-active { background: var(--c-s); opacity: 0.8; transform: scale(1.4); }
 
-/* ======== CTA ======== */
+@media (max-width: 768px) {
+  .s-gallery__card { width: 75vw; height: 55vh; }
+  .s-gallery__frame-inner { width: 75vw; height: 55vh; }
+}
+
+/* ========== CTA ========== */
 .s-cta {
   position: relative; min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
   text-align: center; padding: 4rem 2rem; overflow: hidden;
-  border-bottom: 1px solid var(--c-secondary);
+  border-bottom: 1px solid var(--c-s);
+}
+.s-cta::after {
+  position: absolute; top: 0; left: 0; z-index: 4;
+  width: 100%; height: 100%;
+  border: var(--c-s) solid; border-width: 0;
+  border-radius: 999rem;
+  transition: border-width 0.6s cubic-bezier(0.86,0,0.07,1);
+  will-change: border-width; content: ""; pointer-events: none;
 }
 .s-cta__canvas { position: absolute; inset: 0; pointer-events: none; }
 .s-cta__content { position: relative; z-index: 2; max-width: 48rem; }
 .s-cta__label {
   font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.15em;
-  color: var(--c-accent); margin-bottom: 2rem;
+  color: var(--c-a); margin-bottom: 2rem;
 }
-.s-cta__title { font: 900 clamp(2rem, 5vw, 4rem) var(--f-display); line-height: 1.1; margin-bottom: 2rem; }
-.s-cta__text { font: 400 1.1rem/1.8 var(--f-body); opacity: 0.7; margin-bottom: 3rem; }
-.s-cta__credit { font: 400 1.5rem var(--f-display); color: var(--c-accent); letter-spacing: 0.05em; }
-.s-cta__credit-sub { font: 400 13px var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; margin-top: 1rem; }
+.s-cta__title {
+  font: 900 clamp(2rem, 5vw, 4rem) var(--f-display);
+  line-height: 1.05; margin-bottom: 2rem;
+}
+.s-cta__text {
+  font: 400 clamp(0.95rem, 1.5vw, 1.1rem)/1.8 var(--f-body);
+  opacity: 0.65; margin-bottom: 3rem;
+}
+.s-cta__credit { font: 400 1.5rem var(--f-display); color: var(--c-a); letter-spacing: 0.05em; }
+.s-cta__credit-sub {
+  font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em;
+  opacity: 0.45; margin-top: 1rem;
+}
 
-/* ======== FOOTER ======== */
+/* ========== FOOTER ========== */
 .site-footer {
-  border-top: 1px solid var(--c-secondary); padding: 2rem 2.5rem;
+  padding: 2rem 2.5rem;
   display: flex; justify-content: space-between; align-items: center;
-  font: 400 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em;
-  opacity: 0.5;
+  font: 400 10px var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em;
+  opacity: 0.45;
 }
 @media (max-width: 768px) {
   .site-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
 }
-
-/* Utility */
-.u-hidden { opacity: 0; pointer-events: none; }
 </style>
 </head>
 <body>
 
 <!-- INTRO -->
 <div class="site-intro js-intro">
-  <svg viewBox="0 0 512 512" width="160" height="160">
-    <rect width="512" height="512" rx="80" fill="none"/>
-    <text x="256" y="310" text-anchor="middle" font-family="var(--f-display)" font-size="260" font-weight="900" fill="var(--c-primary)">蛴</text>
-    <circle cx="400" cy="130" r="45" fill="#e8753a" opacity="0.9"/>
-  </svg>
+  <div class="site-intro__frame js-intro-border"></div>
+  <div class="site-intro__logo">
+    <svg viewBox="0 0 512 512" width="160" height="160">
+      <rect width="512" height="512" rx="80" fill="transparent"/>
+      <text x="256" y="310" text-anchor="middle" font-family="serif" font-size="260" font-weight="900" fill="var(--c-p)">蛴</text>
+      <circle cx="400" cy="130" r="45" fill="#e8753a" opacity="0.85"/>
+    </svg>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -326,17 +404,17 @@ img { display: block; max-width: 100%; }
       <div class="site-head__logo">
         <svg viewBox="0 0 512 512" width="48" height="48">
           <rect width="512" height="512" rx="64" fill="#c43a31"/>
-          <text x="256" y="318" text-anchor="middle" font-family="var(--f-display)" font-size="210" font-weight="900" fill="#fef3e0">蛴</text>
+          <text x="256" y="318" text-anchor="middle" font-family="serif" font-size="210" font-weight="900" fill="#fef3e0">蛴</text>
         </svg>
       </div>
       <div class="site-head__console">
-        <span class="js-console-text">南充蛴蟆节 · 非遗传承</span><span class="caret">_</span>
+        <span class="js-console-text"></span><span class="caret">_</span>
       </div>
       <nav class="site-head__nav">
-        <a href="#about">关于</a>
-        <a href="#activities">活动</a>
-        <a href="#gallery">影像</a>
-        <a href="#credit">关于我们</a>
+        <a href="#about">About</a>
+        <a href="#activities">Events</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#credit">Credit</a>
       </nav>
     </div>
   </header>
@@ -390,13 +468,13 @@ img { display: block; max-width: 100%; }
         <div class="s-activity__num">01</div>
         <div class="s-activity__line"></div>
         <h3 class="s-activity__name">扎蛴蟆灯</h3>
-        <p class="s-activity__desc">选用竹篾扎骨架，糊以白纸，描画蛴蟆模样，内置烛火。家家户户在节前精心制作，灯型各异、栩栩如生，寄托驱邪纳福的美好愿望。</p>
+        <p class="s-activity__desc">选用竹篾扎骨架，糊以白纸，描画蛴蟆模样，内置烛火。家家户户节前精心制作，灯型各异、栩栩如生，寄托驱邪纳福的美好愿望。</p>
       </div>
       <div class="s-activity js-activity">
         <div class="s-activity__num">02</div>
         <div class="s-activity__line"></div>
         <h3 class="s-activity__name">举灯巡游</h3>
-        <p class="s-activity__desc">夜幕降临，万人空巷。男女老少手举蛴蟆灯，汇成蜿蜒数里的火龙，齐唱古老歌谣，场面震撼人心，被誉为"四川版千与千寻"。</p>
+        <p class="s-activity__desc">夜幕降临，万人空巷。男女老少手举蛴蟆灯，汇成蜿蜒数里的火龙，齐唱"十四夜，送蛴蟆……"古老歌谣，场面震撼人心。</p>
       </div>
       <div class="s-activity js-activity">
         <div class="s-activity__num">03</div>
@@ -407,24 +485,32 @@ img { display: block; max-width: 100%; }
     </div>
   </section>
 
-  <!-- GALLERY: Horizontal scroll-track -->
+  <!-- GALLERY: 3D Cylindrical Scroll -->
   <section class="s-gallery js-gallery" id="gallery">
     <div class="s-gallery__sticky">
-      <div class="s-gallery__track js-track">
-        <!-- Header card -->
-        <div class="s-gallery__card">
-          <div class="s-gallery__header">
-            <p class="s-gallery__header-label">/ 影像记录</p>
-            <h2 class="s-gallery__header-title">灯火里的<br>蛴蟆节</h2>
-          </div>
+      <!-- 3D Scene -->
+      <div class="s-gallery__scene js-scene">
+        <div class="s-gallery__rotator js-rotator">
+          <!-- Cards injected by JS -->
         </div>
-        <!-- Cards injected by JS -->
       </div>
+      <!-- Center frame -->
+      <div class="s-gallery__frame">
+        <div class="s-gallery__frame-inner"></div>
+      </div>
+      <!-- Title overlay -->
+      <div class="s-gallery__title-card js-gallery-title">
+        <div class="s-gallery__title-card-inner">
+          <p class="s-gallery__title-label">/ 影像记录</p>
+          <h2 class="s-gallery__title-heading">灯火里的<br>蛴蟆节</h2>
+        </div>
+      </div>
+      <!-- Dots -->
       <div class="s-gallery__dots js-dots"></div>
     </div>
   </section>
 
-  <!-- CTA / CREDIT -->
+  <!-- CTA -->
   <section class="s-cta js-cta" id="credit">
     <canvas class="s-cta__canvas js-cta-canvas"></canvas>
     <div class="s-cta__content">
@@ -447,13 +533,14 @@ img { display: block; max-width: 100%; }
 </div>
 
 <script>
-// ==================== GSAP REGISTER ====================
 gsap.registerPlugin(ScrollTrigger);
 
 // ==================== INTRO ====================
 (function() {
   const intro = document.querySelector('.js-intro');
+  const border = document.querySelector('.js-intro-border');
   const svg = intro.querySelector('svg');
+
   const tl = gsap.timeline({
     onComplete() {
       gsap.to(intro, { opacity: 0, duration: 0.5, ease: 'power2.in',
@@ -461,9 +548,13 @@ gsap.registerPlugin(ScrollTrigger);
       });
     }
   });
-  tl.fromTo(svg, { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: 'power3.out' })
+  // Border frame animation — thick to thin
+  tl.set(border, { borderWidth: '1rem', opacity: 0.3 })
+    .to(border, { borderWidth: '0.5rem', opacity: 1, duration: 0.5, ease: 'power2.out' })
+    .fromTo(svg, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.2')
     .to({}, { duration: 0.5 })
-    .to(svg, { scale: 1.5, opacity: 0, duration: 0.4, ease: 'power2.in' });
+    .to(border, { borderWidth: '4rem', opacity: 0, duration: 0.5, ease: 'power3.in' }, '-=0.3')
+    .to(svg, { scale: 1.5, opacity: 0, duration: 0.4, ease: 'power2.in' }, '-=0.3');
 })();
 
 // ==================== HEADER TYPING ====================
@@ -485,49 +576,45 @@ gsap.registerPlugin(ScrollTrigger);
   });
 })();
 
-// ==================== HERO CANVAS ====================
+// ==================== HERO CANVAS (firefly particles) ====================
 (function() {
   const canvas = document.querySelector('.js-hero-canvas');
   const ctx = canvas.getContext('2d');
-  let particles = [];
+  let pts = [];
   function resize() {
     const r = canvas.parentElement.getBoundingClientRect();
     canvas.width = r.width; canvas.height = r.height;
   }
-  class Particle {
+  class P {
     constructor() { this.reset(true); }
     reset(init) {
       this.x = Math.random() * canvas.width;
       this.y = init ? Math.random() * canvas.height : canvas.height + 20;
-      this.size = Math.random() * 2 + 0.8;
-      this.sx = (Math.random() - 0.5) * 0.3;
-      this.sy = -(Math.random() * 0.5 + 0.2);
-      this.op = Math.random() * 0.4 + 0.15;
-      this.ps = Math.random() * 0.02 + 0.008;
+      this.s = Math.random() * 1.8 + 0.8;
+      this.sx = (Math.random() - 0.5) * 0.25;
+      this.sy = -(Math.random() * 0.45 + 0.15);
+      this.o = Math.random() * 0.4 + 0.12;
+      this.ps = Math.random() * 0.015 + 0.006;
       this.po = Math.random() * Math.PI * 2;
     }
-    update() {
+    upd() {
       this.x += this.sx; this.y += this.sy;
       if (this.y < -20 || this.x < -20 || this.x > canvas.width + 20) this.reset(false);
     }
     draw() {
-      const p = Math.sin(Date.now() * this.ps + this.po) * 0.3 + 0.7;
-      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(232,117,58,${this.op * p})`; ctx.fill();
-      ctx.beginPath(); ctx.arc(this.x, this.y, this.size*2.8, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(212,168,83,${this.op * p * 0.2})`; ctx.fill();
+      const a = this.o * (Math.sin(Date.now() * this.ps + this.po) * 0.3 + 0.7);
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(232,117,58,${a})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.s*3, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(212,168,83,${a*0.18})`; ctx.fill();
     }
   }
-  function tick() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(tick);
-  }
-  resize(); particles = Array.from({ length: 55 }, () => new Particle()); tick();
+  function tick() { ctx.clearRect(0, 0, canvas.width, canvas.height); pts.forEach(p => { p.upd(); p.draw(); }); requestAnimationFrame(tick); }
+  resize(); pts = Array.from({ length: 50 }, () => new P()); tick();
   window.addEventListener('resize', resize);
 })();
 
-// ==================== ABOUT CANVAS GRID ====================
+// ==================== ABOUT CANVAS (dot grid like reference) ====================
 (function() {
   const canvas = document.querySelector('.js-about-canvas');
   if (!canvas) return;
@@ -538,21 +625,30 @@ gsap.registerPlugin(ScrollTrigger);
     canvas.width = w.clientWidth; canvas.height = w.clientHeight;
   }
   function draw(p) {
-    const W = canvas.width, H = canvas.height, S = 40;
+    const W = canvas.width, H = canvas.height;
+    const S = 48; // grid spacing like reference
     ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = `rgba(26,11,8,${0.05 + p * 0.06})`; ctx.lineWidth = 0.5;
-    for (let y = 0; y < H; y += S) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W * Math.min(1, Math.max(0, p * 1.5 - y / H)), y); ctx.stroke();
-    }
-    for (let x = 0; x < W; x += S) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H * Math.min(1, Math.max(0, p * 1.5 - x / W))); ctx.stroke();
-    }
+
+    // Dot grid — like reference's smiley grid pattern
     for (let x = S; x < W; x += S) {
       for (let y = S; y < H; y += S) {
-        const d = Math.hypot((x - W/2)/W, (y - H/2)/H);
-        const a = Math.max(0, p - d * 0.5) * 0.35;
-        if (a > 0.01) { ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI*2); ctx.fillStyle = `rgba(196,58,49,${a})`; ctx.fill(); }
+        const dx = (x - W/2) / (W/2);
+        const dy = (y - H/2) / (H/2);
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const reveal = Math.max(0, Math.min(1, p * 1.8 - dist * 0.6));
+        if (reveal > 0.02) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1.2, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(26,11,8,${reveal * 0.35})`;
+          ctx.fill();
+        }
       }
+    }
+    // Cross lines (subtle)
+    ctx.strokeStyle = `rgba(26,11,8,${0.03 + p * 0.04})`;
+    ctx.lineWidth = 0.5;
+    for (let x = S; x < W; x += S) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H * p); ctx.stroke();
     }
   }
   function tick() { ctx.clearRect(0, 0, canvas.width, canvas.height); draw(sp); requestAnimationFrame(tick); }
@@ -564,7 +660,7 @@ gsap.registerPlugin(ScrollTrigger);
   window.addEventListener('resize', resize);
 })();
 
-// ==================== CTA CANVAS (RISING LANTERNS) ====================
+// ==================== CTA CANVAS (rising lanterns) ====================
 (function() {
   const canvas = document.querySelector('.js-cta-canvas');
   if (!canvas) return;
@@ -574,43 +670,43 @@ gsap.registerPlugin(ScrollTrigger);
     const r = canvas.parentElement.getBoundingClientRect();
     canvas.width = r.width; canvas.height = r.height;
   }
-  class Lantern {
+  class L {
     constructor() { this.reset(true); }
     reset(init) {
       this.x = Math.random() * canvas.width;
       this.y = init ? Math.random() * canvas.height : canvas.height + 30;
-      this.sz = Math.random() * 2.5 + 1.2;
-      this.sy = -(Math.random() * 0.5 + 0.15);
-      this.sx = (Math.random() - 0.5) * 0.4;
+      this.s = Math.random() * 2.2 + 1;
+      this.sy = -(Math.random() * 0.45 + 0.12);
+      this.sx = (Math.random() - 0.5) * 0.35;
       this.wb = Math.random() * Math.PI * 2;
-      this.ws = Math.random() * 0.012 + 0.004;
-      this.op = Math.random() * 0.5 + 0.2;
+      this.ws = Math.random() * 0.01 + 0.004;
+      this.o = Math.random() * 0.5 + 0.18;
       this.hue = Math.random() > 0.5 ? '232,117,58' : '212,168,83';
     }
-    update() {
-      this.y += this.sy; this.x += this.sx + Math.sin(this.wb) * 0.25; this.wb += this.ws;
+    upd() {
+      this.y += this.sy; this.x += this.sx + Math.sin(this.wb) * 0.22; this.wb += this.ws;
       if (this.y < -30) this.reset(false);
     }
     draw() {
-      const a = this.op * (0.5 + 0.5 * Math.sin(this.wb));
-      ctx.beginPath(); ctx.arc(this.x, this.y, this.sz, 0, Math.PI*2);
+      const a = this.o * (0.5 + 0.5 * Math.sin(this.wb));
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2);
       ctx.fillStyle = `rgba(${this.hue},${a})`; ctx.fill();
-      ctx.beginPath(); ctx.arc(this.x, this.y, this.sz*3, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(${this.hue},${a*0.1})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.s*3.5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${this.hue},${a*0.08})`; ctx.fill();
     }
   }
-  function tick() { ctx.clearRect(0, 0, canvas.width, canvas.height); pts.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(tick); }
-  resize(); pts = Array.from({ length: 45 }, () => new Lantern()); tick();
+  function tick() { ctx.clearRect(0, 0, canvas.width, canvas.height); pts.forEach(p => { p.upd(); p.draw(); }); requestAnimationFrame(tick); }
+  resize(); pts = Array.from({ length: 40 }, () => new L()); tick();
   window.addEventListener('resize', resize);
 })();
 
-// ==================== HORIZONTAL SCROLL-TRACK GALLERY ====================
+// ==================== 3D CYLINDRICAL GALLERY ====================
 (function() {
   const gallery = document.querySelector('.js-gallery');
-  const track = document.querySelector('.js-track');
+  const rotator = document.querySelector('.js-rotator');
   const dotsWrap = document.querySelector('.js-dots');
+  const titleCard = document.querySelector('.js-gallery-title');
 
-  // Photo filenames (in images/ folder)
   const photos = [
     'e1b1fbe077ca0958c4c8d8dbc67deab1.jpg',
     '642332684d3777524745d9680cb8556e.jpg',
@@ -619,105 +715,86 @@ gsap.registerPlugin(ScrollTrigger);
     '339f109f1fbf4a14b010a0ecca2996b7.jpg',
     'f218281e74516dd0d4d7bf481dde7905.jpg',
   ];
+  const labels = ['扎蛴蟆灯','万人巡游','送灯祈福','灯火长龙','非遗传承','祈福平安'];
 
-  const items = [
-    { label: '扎蛴蟆灯', desc: '竹篾扎骨架，糊以白纸，描画蛴蟆模样，内置烛火。家家户户节前精心制作，寄托驱邪纳福的美好愿望。' },
-    { label: '万人巡游', desc: '夜幕降临，男女老少手举蛴蟆灯，汇成蜿蜒数里的火龙，齐唱民谣，场面震撼人心。' },
-    { label: '送灯祈福', desc: '队伍将蛴蟆灯送至河边田头点燃焚烧，灯火化为漫天星光，寓意送走灾祸，迎来丰收。' },
-    { label: '灯火长龙', desc: '三百年传承不息，每年农历正月十四，万盏灯火照亮南充夜空，如长龙蜿蜒山间。' },
-    { label: '非遗传承', desc: '四川省第六批非物质文化遗产代表性项目，从明末清初延续至今，代代相传、生生不息。' },
-    { label: '祈福平安', desc: '"十四夜，送蛴蟆，蛴蟆公，蛴蟆婆，把你蛴蟆送下河……"古老歌谣里装着对美好生活的永恒期盼。' },
-  ];
+  const N = photos.length;
+  const anglePer = 360 / N;
+  const radius = 28; // rem — cylinder radius
 
-  // Build cards with real photos
-  items.forEach((item, i) => {
-    const photoUrl = 'images/' + photos[i];
+  // Build cards
+  photos.forEach((f, i) => {
     const card = document.createElement('div');
     card.className = 's-gallery__card';
     card.innerHTML = `
-      <div class="s-gallery__card-inner">
-        <img src="${photoUrl}" alt="${item.label}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-        <div class="s-gallery__card-label" style="position:absolute;bottom:0;left:0;right:0;padding:2rem 1.5rem 1.5rem;background:linear-gradient(transparent,rgba(26,11,8,0.85));color:#fef3e0;font:700 1.25rem var(--f-display);text-align:center;">${item.label}</div>
-      </div>
-      <p class="s-gallery__card-label">${item.label} — ${item.desc}</p>
+      <img src="images/${f}" alt="${labels[i]}" loading="lazy">
+      <div class="s-gallery__card-caption">${labels[i]}</div>
     `;
-    track.appendChild(card);
-    // Dot
+    // Initial position: around the cylinder at Y rotation = i * anglePer
+    card.style.transform = `rotateY(${i * anglePer}deg) translateZ(${radius}rem)`;
+    rotator.appendChild(card);
+
     const dot = document.createElement('div');
     dot.className = 's-gallery__dot';
     dotsWrap.appendChild(dot);
   });
 
-  const cards = track.querySelectorAll('.s-gallery__card');
+  const cards = rotator.querySelectorAll('.s-gallery__card');
   const dots = dotsWrap.querySelectorAll('.s-gallery__dot');
-  const totalCards = cards.length; // 1 header + N data cards
 
-  // Calculate scroll distance: need to slide all cards past the viewport
-  // Each card is min(65vw, 42rem) wide. We slide track so all cards scroll through.
-  function getCardWidth() {
-    const firstCard = cards[0];
-    if (!firstCard) return window.innerWidth * 0.65;
-    return firstCard.getBoundingClientRect().width + 32; // + gap
-  }
-
-  let cardWidth = getCardWidth();
-
-  // Total scroll distance = total width of track minus viewport
-  function getScrollDistance() {
-    return cardWidth * totalCards;
-  }
-
-  // The track starts with header visible, scrolls left to reveal all cards
   ScrollTrigger.create({
     trigger: gallery,
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 1,
-    onRefresh() {
-      cardWidth = getCardWidth();
-    },
+    scrub: 0.8,
     onUpdate(self) {
-      const dist = getScrollDistance();
-      const x = -self.progress * dist;
-      track.style.transform = `translate3d(${x}px,0,0)`;
+      const p = self.progress; // 0..1
+      // Rotate the whole cylinder
+      const totalRotation = p * 360;
+      rotator.style.transform = `rotateY(${-totalRotation}deg)`;
 
-      // Update active dot
-      if (totalCards > 0) {
-        const activeIdx = Math.round(self.progress * (totalCards - 1));
-        dots.forEach((d, i) => {
-          d.classList.toggle('is-active', i === activeIdx);
-        });
+      // Dim cards that are at the back, brighten front
+      cards.forEach((card, i) => {
+        const cardAngle = (i * anglePer - totalRotation) % 360;
+        const normalized = ((cardAngle + 180) % 360 + 360) % 360 - 180; // -180..180
+        const frontness = Math.cos(normalized * Math.PI / 180); // 1=front, -1=back
+        const opacity = 0.3 + (frontness + 1) / 2 * 0.7;
+        card.style.opacity = String(Math.max(0.2, opacity));
+        card.style.filter = `brightness(${0.3 + opacity * 0.7})`;
+      });
+
+      // Update dots
+      const activeIdx = Math.round(p * (N - 1));
+      dots.forEach((d, i) => { d.classList.toggle('is-active', i === activeIdx); });
+
+      // Fade title when scrolling into cards
+      if (titleCard) {
+        titleCard.style.opacity = String(Math.max(0, 1 - p * 3));
       }
     },
   });
 
-  window.addEventListener('resize', () => {
-    cardWidth = getCardWidth();
-    ScrollTrigger.refresh();
-  });
+  // Nudge cards so first one is roughly front-facing at start
+  rotator.style.transform = 'rotateY(0deg)';
 })();
 
 // ==================== SCROLL REVEALS ====================
 (function() {
   document.addEventListener('siteLoaded', () => {
-    // Hero
     const heroTl = gsap.timeline({ delay: 0.5 });
     heroTl
       .to('.js-hero-super', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' })
       .to('.js-hero-title', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.3')
-      .to('.js-hero-sub', { opacity: 0.6, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
+      .to('.js-hero-sub', { opacity: 0.55, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
       .to('.js-hero-scroll', { opacity: 1, duration: 0.5 }, '-=0.2');
 
-    // About
     ScrollTrigger.create({
       trigger: '.js-about', start: 'top 75%', once: true,
       onEnter() {
         gsap.to('.js-about-col1', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' });
-        gsap.to('.js-about-col2', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', delay: 0.2 });
+        gsap.to('.js-about-col2', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', delay: 0.15 });
       }
     });
 
-    // Activities
     ScrollTrigger.create({
       trigger: '.js-activities', start: 'top 70%', once: true,
       onEnter() {
@@ -725,31 +802,27 @@ gsap.registerPlugin(ScrollTrigger);
       }
     });
 
-    // CTA
     ScrollTrigger.create({
-      trigger: '.js-cta', start: 'top 75%', once: true,
+      trigger: '.js-cta', start: 'top 80%', once: true,
       onEnter() {
         gsap.fromTo('.s-cta__content > *', { y: 25, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 0.6, ease: 'power2.out' });
       }
     });
   });
 
-  // Set initial states
   gsap.set('.js-about-col1, .js-about-col2', { y: 30, opacity: 0 });
   gsap.set('.js-hero-super', { y: 15 }); gsap.set('.js-hero-title', { y: 25 }); gsap.set('.js-hero-sub', { y: 15 });
   gsap.set('.js-hero-scroll', { opacity: 0 });
 })();
 
 // ==================== SMOOTH NAV ====================
-(function() {
-  document.querySelectorAll('.site-head__nav a').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const el = document.querySelector(a.getAttribute('href'));
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    });
+document.querySelectorAll('.site-head__nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.querySelector(a.getAttribute('href'));
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   });
-})();
+});
 </script>
 </body>
 </html>

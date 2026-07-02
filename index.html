@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="is-scroll-blocked">
+<head>
+<meta charset="utf-8">
+<title>南充蛴蟆节 — 三百年非遗传承</title>
+<meta name="description" content="南充蛴蟆节，四川省非物质文化遗产，每年农历正月十四，万人举灯送蛴蟆，祈福平安。西南石油大学南充校区三下乡队伍倾情呈现。">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="南充蛴蟆节 — 三百年非遗传承">
+<meta property="og:description" content="扎蛴蟆灯，举灯巡游，唱民谣送灯祈福。四川省第六批非遗代表性项目。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1a0b08">
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+/* ========== FONTS ========== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* ========== CSS VARIABLES ========== */
+:root {
+  --color-primary: #fef3e0;
+  --color-secondary: #1a0b08;
+  --color-shadow: #c8bda9;
+  --color-white: #fff8ea;
+  --color-accent: #c43a31;
+  --color-gold: #d4a853;
+  --color-lantern: #e8753a;
+
+  --font-display: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+
+  --font-weight-base: 400;
+  --font-size-base: 16px;
+  --font-height-base: 1.6;
+  --font-spacing-base: 0;
+}
+
+/* ========== RESET ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font: var(--font-weight-base) var(--font-size-base)/var(--font-height-base) var(--font-body);
+  letter-spacing: var(--font-spacing-base);
+  background-color: var(--color-secondary);
+  scrollbar-width: none;
+  color: var(--color-secondary);
+  overflow-x: hidden;
+}
+html::-webkit-scrollbar { display: none; }
+
+body {
+  background-color: var(--color-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+
+/* ========== SITE WRAPPER ========== */
+.site-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ========== HEADER ========== */
+.site-head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  border-bottom: 1px solid var(--color-secondary);
+  opacity: 0;
+  background: var(--color-primary);
+}
+.site-head__container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  height: 5rem;
+}
+.site-head__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem;
+  width: 5rem;
+  height: 5rem;
+  border-right: 1px solid var(--color-secondary);
+  flex-shrink: 0;
+}
+.site-head__logo svg {
+  width: 3rem;
+  height: 3rem;
+}
+.site-head__console {
+  display: flex;
+  align-items: center;
+  margin: 0 auto 0 0;
+  padding: 0 1.5rem;
+  font: 400 10px/1.4 var(--font-mono);
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  opacity: 0.7;
+}
+.site-head__console .caret {
+  display: inline-block;
+  width: 1ch;
+  animation: caret-blink 1s step-end infinite;
+}
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.site-head__nav {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+.site-head__nav a {
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  font: 400 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-left: 1px solid var(--color-secondary);
+  transition: background 0.3s, color 0.3s;
+}
+.site-head__nav a:hover {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .site-head__container { height: 3.5rem; }
+  .site-head__logo { width: 3.5rem; height: 3.5rem; padding: 0.625rem; }
+  .site-head__logo svg { width: 2rem; height: 2rem; }
+  .site-head__console { display: none; }
+  .site-head__nav a { padding: 0 0.75rem; font-size: 10px; }
+}
+
+/* ========== HERO ========== */
+.s-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  border-bottom: 1px solid var(--color-secondary);
+  overflow: hidden;
+}
+.s-hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.s-hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+}
+.s-hero__supertitle {
+  font: 400 12px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+}
+.s-hero__title {
+  font: 900 clamp(3rem, 8vw, 9rem) var(--font-display);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--color-secondary);
+  opacity: 0;
+}
+.s-hero__title .char {
+  display: inline-block;
+}
+.s-hero__subtitle {
+  font: 400 clamp(1rem, 2.5vw, 1.5rem) var(--font-body);
+  color: var(--color-secondary);
+  opacity: 0.6;
+  margin-top: 2rem;
+  opacity: 0;
+}
+.s-hero__scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+}
+.s-hero__scroll span {
+  font: 400 10px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-secondary);
+}
+.s-hero__scroll-line {
+  width: 1px;
+  height: 3rem;
+  background: var(--color-secondary);
+  animation: scroll-line 2s ease-in-out infinite;
+}
+@keyframes scroll-line {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  50.01% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ========== ABOUT SECTION ========== */
+.s-about {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid var(--color-secondary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.s-about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 100vh;
+}
+.s-about__col {
+  position: relative;
+  padding: 6rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.s-about__col:first-child {
+  border-right: 1px solid var(--color-secondary);
+}
+.s-about__label {
+  font: 400 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  margin-bottom: 2rem;
+}
+.s-about__title {
+  font: 900 clamp(2rem, 4vw, 4rem) var(--font-display);
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  color: var(--color-secondary);
+}
+.s-about__text {
+  font: 400 clamp(1rem, 1.5vw, 1.25rem)/1.8 var(--font-body);
+  color: var(--color-secondary);
+  opacity: 0.75;
+  max-width: 36rem;
+}
+.s-about__canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+.s-about__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.s-about__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.s-about__stat {
+  border-top: 1px solid var(--color-secondary);
+  padding-top: 1rem;
+}
+.s-about__stat-number {
+  font: 900 2.5rem var(--font-display);
+  color: var(--color-accent);
+  line-height: 1;
+}
+.s-about__stat-label {
+  font: 400 12px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .s-about__grid {
+    grid-template-columns: 1fr;
+  }
+  .s-about__col:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--color-secondary);
+  }
+  .s-about__col {
+    padding: 3rem 1.5rem;
+  }
+  .s-about__canvas-wrap {
+    min-height: 300px;
+  }
+}
+
+/* ========== ACTIVITIES SECTION ========== */
+.s-activities {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid var(--color-secondary);
+}
+.s-activities__header {
+  padding: 5rem 4rem 3rem;
+  border-bottom: 1px solid var(--color-secondary);
+}
+.s-activities__label {
+  font: 400 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+}
+.s-activities__title {
+  font: 900 clamp(2.5rem, 5vw, 5rem) var(--font-display);
+  line-height: 1;
+  color: var(--color-secondary);
+}
+.s-activities__items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.s-activity {
+  position: relative;
+  padding: 3rem 2.5rem;
+  border-right: 1px solid var(--color-secondary);
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  cursor: default;
+  transition: background 0.5s;
+}
+.s-activity:last-child {
+  border-right: none;
+}
+.s-activity:hover {
+  background: var(--color-secondary);
+}
+.s-activity:hover .s-activity__number,
+.s-activity:hover .s-activity__name,
+.s-activity:hover .s-activity__desc {
+  color: var(--color-primary);
+}
+.s-activity:hover .s-activity__line {
+  background: var(--color-accent);
+}
+.s-activity__number {
+  font: 900 8rem var(--font-display);
+  line-height: 0.8;
+  color: var(--color-accent);
+  opacity: 0.15;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  transition: color 0.5s, opacity 0.5s;
+}
+.s-activity:hover .s-activity__number {
+  opacity: 0.25;
+}
+.s-activity__name {
+  font: 900 1.75rem var(--font-display);
+  color: var(--color-secondary);
+  margin-bottom: 0.75rem;
+  transition: color 0.5s;
+}
+.s-activity__desc {
+  font: 400 0.95rem/1.7 var(--font-body);
+  color: var(--color-secondary);
+  opacity: 0.65;
+  max-width: 24rem;
+  transition: color 0.5s;
+}
+.s-activity__line {
+  width: 2rem;
+  height: 2px;
+  background: var(--color-secondary);
+  margin-bottom: 1.5rem;
+  transition: background 0.5s, width 0.3s;
+}
+.s-activity:hover .s-activity__line {
+  width: 4rem;
+}
+
+@media (max-width: 768px) {
+  .s-activities__items {
+    grid-template-columns: 1fr;
+  }
+  .s-activity {
+    border-right: none;
+    border-bottom: 1px solid var(--color-secondary);
+    min-height: 40vh;
+  }
+  .s-activities__header {
+    padding: 3rem 1.5rem 2rem;
+  }
+}
+
+/* ========== GALLERY ========== */
+.s-gallery {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid var(--color-secondary);
+}
+.s-gallery__header {
+  padding: 5rem 4rem 3rem;
+  border-bottom: 1px solid var(--color-secondary);
+}
+.s-gallery__label {
+  font: 400 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+}
+.s-gallery__title {
+  font: 900 clamp(2.5rem, 5vw, 5rem) var(--font-display);
+  color: var(--color-secondary);
+}
+.s-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.s-gallery__item {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-right: 1px solid var(--color-secondary);
+  border-bottom: 1px solid var(--color-secondary);
+}
+.s-gallery__item:nth-child(2n) {
+  border-right: none;
+}
+.s-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+.s-gallery__item:hover img {
+  transform: scale(1.05);
+}
+.s-gallery__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(transparent, rgba(26, 11, 8, 0.85));
+  color: var(--color-primary);
+  font: 400 0.85rem var(--font-body);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s;
+}
+.s-gallery__item:hover .s-gallery__caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .s-gallery__grid { grid-template-columns: 1fr; }
+  .s-gallery__item { border-right: none; }
+  .s-gallery__header { padding: 3rem 1.5rem 2rem; }
+}
+
+/* ========== CTA / FOOTER ========== */
+.s-cta {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  overflow: hidden;
+}
+.s-cta__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.s-cta__content {
+  position: relative;
+  z-index: 2;
+  max-width: 48rem;
+}
+.s-cta__label {
+  font: 400 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  margin-bottom: 2rem;
+}
+.s-cta__title {
+  font: 900 clamp(2rem, 5vw, 4rem) var(--font-display);
+  line-height: 1.1;
+  color: var(--color-secondary);
+  margin-bottom: 2rem;
+}
+.s-cta__text {
+  font: 400 1.1rem/1.8 var(--font-body);
+  color: var(--color-secondary);
+  opacity: 0.7;
+  margin-bottom: 3rem;
+}
+.s-cta__credit {
+  font: 400 1.25rem var(--font-display);
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+}
+.s-cta__credit-sub {
+  font: 400 13px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-secondary);
+  opacity: 0.5;
+  margin-top: 1rem;
+}
+
+/* ========== SITE FOOTER ========== */
+.site-footer {
+  border-top: 1px solid var(--color-secondary);
+  padding: 2rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 400 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-secondary);
+  opacity: 0.5;
+}
+@media (max-width: 768px) {
+  .site-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+/* ========== INTRO OVERLAY ========== */
+.site-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+.site-intro__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.site-intro__logo svg {
+  width: clamp(80px, 15vw, 160px);
+  height: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- Intro Overlay -->
+<div class="site-intro js-intro">
+  <div class="site-intro__logo">
+    <svg viewBox="0 0 512 512" width="160" height="160">
+      <rect width="512" height="512" rx="80" fill="var(--color-accent)" opacity="0"/>
+      <text x="256" y="290" text-anchor="middle" font-family="var(--font-display)" font-size="260" font-weight="900" fill="var(--color-primary)">蛴</text>
+      <circle cx="400" cy="140" r="50" fill="#e8753a" opacity="0.9"/>
+    </svg>
+  </div>
+</div>
+
+<!-- Site Wrapper -->
+<div class="site-wrapper js-site-wrapper" id="top">
+
+  <!-- HEADER -->
+  <header class="site-head js-head">
+    <div class="site-head__container">
+      <div class="site-head__logo">
+        <svg viewBox="0 0 512 512" width="48" height="48">
+          <rect width="512" height="512" rx="64" fill="#c43a31"/>
+          <text x="256" y="318" text-anchor="middle" font-family="var(--font-display)" font-size="210" font-weight="900" fill="#fef3e0" letter-spacing="-16">蛴</text>
+        </svg>
+      </div>
+      <div class="site-head__console">
+        <span class="js-console-text">南充蛴蟆节 · 非遗传承</span><span class="caret">_</span>
+      </div>
+      <nav class="site-head__nav">
+        <a href="#about">关于</a>
+        <a href="#activities">活动</a>
+        <a href="#gallery">影像</a>
+        <a href="#credit">关于我们</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="s-hero js-hero">
+    <canvas class="s-hero__canvas js-hero-canvas"></canvas>
+    <div class="s-hero__content">
+      <p class="s-hero__supertitle js-hero-super">四川省第六批非物质文化遗产</p>
+      <h1 class="s-hero__title js-hero-title">
+        <span class="char">南</span><span class="char">充</span><span class="char">蛴</span><span class="char">蟆</span><span class="char">节</span>
+      </h1>
+      <p class="s-hero__subtitle js-hero-sub">三百年灯火传承 · 万人送灯祈福平安</p>
+    </div>
+    <div class="s-hero__scroll js-hero-scroll">
+      <span>Scroll</span>
+      <div class="s-hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="s-about js-about" id="about">
+    <div class="s-about__grid">
+      <div class="s-about__col js-about-col1">
+        <p class="s-about__label">/ 关于蛴蟆节</p>
+        <h2 class="s-about__title">正月十四<br>送蛴蟆</h2>
+        <p class="s-about__text">
+          蛴蟆节始于明末清初，距今已有三百余年历史。每年农历正月十四，南充市嘉陵区、顺庆区、西充县等地数十万民众举着自制的蛴蟆灯，在夜色中巡游至河畔田边，将灯焚烧祈福，祈求来年无病无灾、五谷丰登。
+        </p>
+        <div class="s-about__stats">
+          <div class="s-about__stat">
+            <div class="s-about__stat-number">300+</div>
+            <div class="s-about__stat-label">年历史传承</div>
+          </div>
+          <div class="s-about__stat">
+            <div class="s-about__stat-number">10万+</div>
+            <div class="s-about__stat-label">年参与人次</div>
+          </div>
+          <div class="s-about__stat">
+            <div class="s-about__stat-number">省级</div>
+            <div class="s-about__stat-label">非物质文化遗产</div>
+          </div>
+          <div class="s-about__stat">
+            <div class="s-about__stat-number">3区县</div>
+            <div class="s-about__stat-label">主要传承地</div>
+          </div>
+        </div>
+      </div>
+      <div class="s-about__col js-about-col2">
+        <div class="s-about__canvas-wrap">
+          <canvas class="s-about__canvas js-about-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITIES -->
+  <section class="s-activities js-activities" id="activities">
+    <div class="s-activities__header">
+      <p class="s-activities__label">/ 节日活动</p>
+      <h2 class="s-activities__title">扎灯 · 巡游 · 送灯</h2>
+    </div>
+    <div class="s-activities__items">
+      <div class="s-activity js-activity">
+        <div class="s-activity__number">01</div>
+        <div class="s-activity__line"></div>
+        <h3 class="s-activity__name">扎蛴蟆灯</h3>
+        <p class="s-activity__desc">选用竹篾扎骨架，糊以白纸，描画蛴蟆（青蛙）模样，内置烛火。家家户户在节前精心制作，灯型各异、栩栩如生，寄托驱邪纳福的美好愿望。</p>
+      </div>
+      <div class="s-activity js-activity">
+        <div class="s-activity__number">02</div>
+        <div class="s-activity__line"></div>
+        <h3 class="s-activity__name">举灯巡游</h3>
+        <p class="s-activity__desc">夜幕降临，万人空巷。男女老少手举蛴蟆灯，汇成蜿蜒数里的火龙，齐唱"十四夜，送蛴蟆，蛴蟆公，蛴蟆婆，把你蛴蟆送下河……"的古老歌谣，场面震撼人心。</p>
+      </div>
+      <div class="s-activity js-activity">
+        <div class="s-activity__number">03</div>
+        <div class="s-activity__line"></div>
+        <h3 class="s-activity__name">送灯祈福</h3>
+        <p class="s-activity__desc">巡游队伍将蛴蟆灯送至河边或田头，点燃焚烧。灯火在夜色中化为漫天星光，寓意将疾病与灾祸随蛴蟆一起送走，迎来新一年的健康与丰收。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="s-gallery js-gallery" id="gallery">
+    <div class="s-gallery__header">
+      <p class="s-gallery__label">/ 影像记录</p>
+      <h2 class="s-gallery__title">灯火里的蛴蟆节</h2>
+    </div>
+    <div class="s-gallery__grid">
+      <div class="s-gallery__item js-gallery-item">
+        <img src="https://cicweiku.oss-cn-beijing.aliyuncs.com/cimg/202606/29/h3wMJ6BXGA.jpg" alt="蛴蟆节万人巡游" loading="lazy">
+        <div class="s-gallery__caption">万人举灯巡游，灯火长龙蜿蜒山间</div>
+      </div>
+      <div class="s-gallery__item js-gallery-item">
+        <img src="https://cicweiku.oss-cn-beijing.aliyuncs.com/cimg/202606/29/d3xnQKpzm6.jpg" alt="蛴蟆灯特写" loading="lazy">
+        <div class="s-gallery__caption">手工扎制的蛴蟆灯，形态各异、栩栩如生</div>
+      </div>
+      <div class="s-gallery__item js-gallery-item">
+        <img src="https://cicweiku.oss-cn-beijing.aliyuncs.com/cimg/202606/29/zF2xdFG8Yt.jpg" alt="送灯祈福" loading="lazy">
+        <div class="s-gallery__caption">将蛴蟆灯送至河边焚烧，祈福平安</div>
+      </div>
+      <div class="s-gallery__item js-gallery-item">
+        <img src="https://cicweiku.oss-cn-beijing.aliyuncs.com/cimg/202606/24/e4BeYdHkxA.jpg" alt="蛴蟆节夜景" loading="lazy">
+        <div class="s-gallery__caption">农历正月十四，南充夜空被万盏灯火点亮</div>
+      </div>
+      <div class="s-gallery__item js-gallery-item">
+        <img src="https://cicweiku.oss-cn-beijing.aliyuncs.com/cimg/202606/23/sZHkyiQNxy.jpg" alt="扎灯制作" loading="lazy">
+        <div class="s-gallery__caption">传统竹篾扎灯技艺，代代相传</div>
+      </div>
+      <div class="s-gallery__item js-gallery-item">
+        <img src="https://cicweiku.oss-cn-beijing.aliyuncs.com/cimg/202606/22/jmrKJZW5bQ.jpg" alt="蛴蟆节盛况" loading="lazy">
+        <div class="s-gallery__caption">"四川版千与千寻"，灯火与星空交相辉映</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CREDITS -->
+  <section class="s-cta js-cta" id="credit">
+    <canvas class="s-cta__canvas js-cta-canvas"></canvas>
+    <div class="s-cta__content">
+      <p class="s-cta__label">/ 关于我们</p>
+      <h2 class="s-cta__title">非遗传承<br>青年在行动</h2>
+      <p class="s-cta__text">
+        我们深入南充蛴蟆节发源地，记录这项三百年非遗的传承现状，用镜头和文字让更多人了解蛴蟆节、走近蛴蟆节。非遗不只是一盏灯，更是一方水土的文化血脉。
+      </p>
+      <p class="s-cta__credit">西南石油大学南充校区</p>
+      <p class="s-cta__credit-sub">三下乡社会实践队伍 · 倾情呈现</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <span>© 2026 西南石油大学南充校区三下乡队伍</span>
+    <span>南充蛴蟆节 · 非遗传承</span>
+  </footer>
+
+</div>
+
+<script>
+// ========== GSAP REGISTRATION ==========
+gsap.registerPlugin(ScrollTrigger);
+
+// Shared state
+const $ = {
+  on(evt, fn) { window.addEventListener(evt, fn); },
+  off(evt, fn) { window.removeEventListener(evt, fn); },
+  once(evt, fn) { window.addEventListener(evt, fn, { once: true }); },
+  qs(sel, ctx) { return (ctx || document).querySelector(sel); },
+  qsa(sel, ctx) { return [...(ctx || document).querySelectorAll(sel)]; }
+};
+
+// ========== INTRO ANIMATION ==========
+function initIntro() {
+  const intro = $.qs('.js-intro');
+  const logoSvg = intro.querySelector('svg');
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      gsap.to(intro, {
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.in',
+        onComplete: () => {
+          intro.style.display = 'none';
+          document.documentElement.classList.remove('is-scroll-blocked');
+          // Dispatch site loaded event
+          window.dispatchEvent(new CustomEvent('siteLoaded'));
+        }
+      });
+    }
+  });
+
+  tl.fromTo(logoSvg, { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: 'power3.out' })
+    .to(logoSvg.querySelector('rect'), { opacity: 1, duration: 0.4 }, '-=0.2')
+    .to({}, { duration: 0.6 })
+    .to(logoSvg, { scale: 1.5, opacity: 0, duration: 0.5, ease: 'power2.in' });
+}
+
+// ========== HEADER ==========
+function initHeader() {
+  const head = $.qs('.js-head');
+
+  // Console typing effect
+  const consoleEl = $.qs('.js-console-text');
+  const texts = ['南充蛴蟆节 · 非遗传承', '农历正月十四 · 送蛴蟆', '三百年灯火不熄', '万人空巷 · 祈福平安'];
+  let textIdx = 0;
+  let charIdx = 0;
+  let isDeleting = false;
+
+  function type() {
+    const current = texts[textIdx];
+    if (isDeleting) {
+      consoleEl.textContent = current.substring(0, charIdx - 1);
+      charIdx--;
+    } else {
+      consoleEl.textContent = current.substring(0, charIdx + 1);
+      charIdx++;
+    }
+
+    if (!isDeleting && charIdx === current.length) {
+      setTimeout(() => { isDeleting = true; type(); }, 2000);
+      return;
+    }
+    if (isDeleting && charIdx === 0) {
+      isDeleting = false;
+      textIdx = (textIdx + 1) % texts.length;
+      setTimeout(type, 500);
+      return;
+    }
+    setTimeout(type, isDeleting ? 40 : 80);
+  }
+  setTimeout(type, 1500);
+
+  // Animate header in after intro
+  $.once('siteLoaded', () => {
+    gsap.to(head, { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.3 });
+  });
+}
+
+// ========== HERO CANVAS (Firefly/Lantern Particles) ==========
+function initHeroCanvas() {
+  const canvas = $.qs('.js-hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animId;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+  }
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2.5 + 0.8;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3 - 0.4;
+      this.opacity = Math.random() * 0.5 + 0.15;
+      this.pulseSpeed = Math.random() * 0.02 + 0.008;
+      this.pulseOffset = Math.random() * Math.PI * 2;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.y < -20 || this.x < -20 || this.x > canvas.width + 20) this.reset();
+      if (this.y > canvas.height + 20) {
+        this.y = -20;
+        this.x = Math.random() * canvas.width;
+      }
+    }
+    draw() {
+      const pulse = Math.sin(Date.now() * this.pulseSpeed + this.pulseOffset) * 0.3 + 0.7;
+      const alpha = this.opacity * pulse;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(232, 117, 58, ${alpha})`;
+      ctx.fill();
+      // Glow
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(212, 168, 83, ${alpha * 0.25})`;
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: 60 }, () => new Particle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    animId = requestAnimationFrame(animate);
+  }
+
+  init();
+  animate();
+  $.on('resize', () => { resize(); });
+}
+
+// ========== ABOUT CANVAS (Grid + Path Animation) ==========
+function initAboutCanvas() {
+  const canvas = $.qs('.js-about-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let animId;
+  let scrollP = 0;
+
+  function resize() {
+    const wrap = canvas.parentElement;
+    canvas.width = wrap.clientWidth;
+    canvas.height = wrap.clientHeight;
+  }
+
+  function drawGrid(p) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const spacing = 40;
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = `rgba(26, 11, 8, ${0.06 + p * 0.06})`;
+    ctx.lineWidth = 0.5;
+
+    // Horizontal lines animate in
+    for (let y = 0; y < H; y += spacing) {
+      const progress = Math.min(1, Math.max(0, (p * 1.5 - y / H)));
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W * progress, y);
+      ctx.stroke();
+    }
+    // Vertical lines
+    for (let x = 0; x < W; x += spacing) {
+      const progress = Math.min(1, Math.max(0, (p * 1.5 - x / W)));
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H * progress);
+      ctx.stroke();
+    }
+
+    // Draw lantern-like circles at intersections
+    for (let x = spacing; x < W; x += spacing) {
+      for (let y = spacing; y < H; y += spacing) {
+        const dist = Math.hypot((x - W / 2) / W, (y - H / 2) / H);
+        const alpha = Math.max(0, p - dist * 0.5) * 0.4;
+        if (alpha > 0.01) {
+          ctx.beginPath();
+          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(196, 58, 49, ${alpha})`;
+          ctx.fill();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid(scrollP);
+    animId = requestAnimationFrame(animate);
+  }
+
+  resize();
+  animate();
+
+  // Scroll-driven progress
+  ScrollTrigger.create({
+    trigger: '.js-about',
+    start: 'top bottom',
+    end: 'bottom top',
+    onUpdate: (self) => {
+      scrollP = self.progress;
+    }
+  });
+
+  $.on('resize', resize);
+}
+
+// ========== CTA CANVAS (Lantern Release) ==========
+function initCtaCanvas() {
+  const canvas = $.qs('.js-cta-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animId;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+  }
+
+  class Lantern {
+    constructor() {
+      this.reset(true);
+    }
+    reset(initial) {
+      this.x = Math.random() * canvas.width;
+      this.y = initial ? Math.random() * canvas.height : canvas.height + 30;
+      this.size = Math.random() * 3 + 1.5;
+      this.speedY = -(Math.random() * 0.6 + 0.2);
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.wobble = Math.random() * Math.PI * 2;
+      this.wobbleSpeed = Math.random() * 0.015 + 0.005;
+      this.opacity = Math.random() * 0.6 + 0.2;
+      this.hue = Math.random() > 0.5 ? '232, 117, 58' : '212, 168, 83'; // lantern or gold
+    }
+    update() {
+      this.y += this.speedY;
+      this.x += this.speedX + Math.sin(this.wobble) * 0.3;
+      this.wobble += this.wobbleSpeed;
+      if (this.y < -30) this.reset(false);
+    }
+    draw() {
+      const alpha = this.opacity * (0.5 + 0.5 * Math.sin(this.wobble));
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.hue}, ${alpha})`;
+      ctx.fill();
+      // glow
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.hue}, ${alpha * 0.12})`;
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: 50 }, () => new Lantern());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    animId = requestAnimationFrame(animate);
+  }
+
+  init();
+  animate();
+  $.on('resize', resize);
+}
+
+// ========== GSAP SCROLL ANIMATIONS ==========
+function initScrollAnimations() {
+  $.once('siteLoaded', () => {
+    // Hero text reveal
+    const heroTl = gsap.timeline({ delay: 0.5 });
+    heroTl
+      .to($.qs('.js-hero-super'), { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' })
+      .to($.qs('.js-hero-title'), { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.3')
+      .to($.qs('.js-hero-sub'), { opacity: 0.6, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.4')
+      .to($.qs('.js-hero-scroll'), { opacity: 1, duration: 0.6 }, '-=0.2');
+
+    // About section reveals
+    ScrollTrigger.create({
+      trigger: '.js-about',
+      start: 'top 75%',
+      onEnter: () => {
+        gsap.to('.js-about-col1', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+        gsap.to('.js-about-col2', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.2 });
+      },
+      once: true
+    });
+
+    // Activity cards stagger reveal
+    ScrollTrigger.create({
+      trigger: '.js-activities',
+      start: 'top 70%',
+      onEnter: () => {
+        gsap.fromTo('.js-activity', { y: 60, opacity: 0 }, {
+          y: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'power3.out'
+        });
+      },
+      once: true
+    });
+
+    // Gallery items
+    ScrollTrigger.create({
+      trigger: '.js-gallery',
+      start: 'top 70%',
+      onEnter: () => {
+        gsap.fromTo('.js-gallery-item', { y: 40, opacity: 0 }, {
+          y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'power2.out'
+        });
+      },
+      once: true
+    });
+
+    // CTA section text reveal
+    ScrollTrigger.create({
+      trigger: '.js-cta',
+      start: 'top 75%',
+      onEnter: () => {
+        gsap.fromTo('.s-cta__content > *', { y: 30, opacity: 0 }, {
+          y: 0, opacity: 1, stagger: 0.15, duration: 0.7, ease: 'power2.out'
+        });
+      },
+      once: true
+    });
+  });
+
+  // Set initial states
+  gsap.set('.js-about-col1, .js-about-col2', { y: 40, opacity: 0 });
+  gsap.set('.js-hero-super', { y: 20 });
+  gsap.set('.js-hero-title', { y: 30 });
+  gsap.set('.js-hero-sub', { y: 20 });
+}
+
+// ========== SMOOTH SCROLL FOR NAV ==========
+function initSmoothScroll() {
+  $.qsa('.site-head__nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = $.qs(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+}
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', () => {
+  initIntro();
+  initHeader();
+  initHeroCanvas();
+  initAboutCanvas();
+  initCtaCanvas();
+  initScrollAnimations();
+  initSmoothScroll();
+});
+</script>
+
+</body>
+</html>
